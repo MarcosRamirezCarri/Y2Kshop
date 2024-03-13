@@ -3,11 +3,12 @@ const theme = {
     textPrimary: "#1b1818",
     textSecondary: "#4b4141",
     textThird: "#584c4d",
+    textFourth: '#ebebeb'
   },
   fontsSizes: {
-    big: 14,
-    semiBig: 10,
-    small: 8,
+    big: 20,
+    semiBig: 16,
+    small: 10,
   },
   fontWeight: {
     bold: 700,
