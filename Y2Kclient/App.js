@@ -1,11 +1,13 @@
 import { StatusBar } from 'expo-status-bar';
 import NavBar from './app/Navbar/NavBar';
+import Carousel from './app/Carousel/Carousel';
 import { StyleSheet, Text, View } from 'react-native';
 
 export default function App() {
   return (
     <View style={styles.container}>
       <NavBar/>
+      <Carousel/>
       <Text>YZK Shop</Text>
       <StatusBar style="auto" />
     </View>
