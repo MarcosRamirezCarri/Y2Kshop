@@ -1,84 +1,61 @@
-import { StatusBar } from 'expo-status-bar';
+"use client"
+import { StyleSheet, View, Image } from "react-native";
+import { Swiper, SwiperSlide } from "swiper/react";
 import {
-    StyleSheet,
-    Text,
-    View,
-    Image,
-    Dimensions,
-    SafeAreaView,
-    Animated,
-  } from "react-native";
-import mockCarousel from '../mocks/mock';
+  Navigation,
+  Pagination,
+  Scrollbar,
+  EffectCoverflow,
+  A11y,
+} from "swiper/modules";
+import "swiper/css";
+import "swiper/css/effect-cube";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import mockCarousel from "../mocks/mock";
 
-  const width = Dimensions.get("window").width;
-const height = Dimensions.get("window").height;
+export default function Carousels() {
+  return (
+    <Swiper
+      style={styles.wrapper}
+      effect={"coverflow"}
+      centeredSlides={false}
+      pagination={true}
+      navigation={true}
+      spaceBetween={10}
+      coverflowEffect={{
+        rotate: 90,
+        stretch: 0,
+        depth: 100,
+        modifier: 1,
+        slideShadows: true,
+      }}
+      modules={[Navigation, Pagination, Scrollbar, A11y, EffectCoverflow]}
+    >
+      {mockCarousel.map((image) => (
+        <SwiperSlide>
+          <View key={image.id} style={styles.slide}>
+            <Image
+              source={{ uri: image.img }}
+              style={styles.image}
+              resizeMode="cover"
+            />
+          </View>
+        </SwiperSlide>
+      ))}
+    </Swiper>
+  );
+}
 
-const ANCHO_CONTENEDOR = width * 0.7;
-const ESPACIO_CONTENEDOR = (width - ANCHO_CONTENEDOR) / 2;
-const ESPACIO = 10;
-
-export default function Carousel() {
-    return (
-      <SafeAreaView style={styles.container}>
-        <StatusBar hidden />
-        <Animated.FlatList
-          showsHorizontalScrollIndicator={false}
-          horizontal={true}
-          snapToAlignment="start"
-          contentContainerStyle={{
-            paddingTop: 200,
-            paddingHorizontal: ESPACIO_CONTENEDOR,
-          }}
-          snapToInterval={ANCHO_CONTENEDOR}
-          decelerationRate={0}
-          scrollEventThrottle={16}
-          data={mockCarousel}
-          keyExtractor={(item) => item}
-          renderItem={({ item, index }) => {
-            const inputRange = [
-              (index - 1) * ANCHO_CONTENEDOR,
-              index * ANCHO_CONTENEDOR,
-              (index + 1) * ANCHO_CONTENEDOR,
-            ];
-  
-        
-            return (
-              <View style={{ width: ANCHO_CONTENEDOR }}>
-                <Animated.View
-                  style={{
-                    marginHorizontal: ESPACIO,
-                    padding: ESPACIO,
-                    borderRadius: 34,
-                    backgroundColor: "#fff",
-                    alignItems: "center",
-                    transform: [{ translateY: scrollY }],
-                  }}
-                >
-                  <Image source={ item.img } style={styles.posterImage} />
-                  <Text style={{ fontWeight: "bold", fontSize: 26 }}>
-                    {" "}
-                    
-                  </Text>
-                </Animated.View>
-              </View>
-            );
-          }}
-        />
-      </SafeAreaView>
-    );
-  }
-
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: "#fff",
-      justifyContent: "center",
-    },
-    posterImage: {
-      width: "100%",
-      height: ANCHO_CONTENEDOR * 1.2,
-      borderRadius: 24,
-      margin: 0,
-      marginBottom: 10,
-    },
-  });
+const styles = StyleSheet.create({
+  wrapper: {},
+  slide: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  image: {
+    width: "100%",
+    height: "100%",
+  },
+});
